@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TestController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -10,6 +11,12 @@ Route::get('/test_route', function () {
     return view('test_route');
 });
 
-Route::get('/test_product/{id}', function ($id) {
+Route::get('/test_product/{id?}', function ($id = 0) {
     return "The product id is: " . $id;
+});
+
+Route::group(['prefix' => 'test_controller'], function () {
+    Route::get('/', [TestController::class, 'index'])->name('test_controller.index');
+
+    Route::get('/product/{id?}', [TestController::class, 'show'])->name('test_controller.show');
 });
