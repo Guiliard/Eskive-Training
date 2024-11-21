@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\test_model;
 
 class ResourceController extends Controller
 {
@@ -11,7 +12,8 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        //
+        $test_model = test_model::all();
+        return dd($test_model);
     }
 
     /**

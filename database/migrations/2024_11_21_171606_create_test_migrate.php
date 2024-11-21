@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('test_migrate', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->timestamps();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->OnDelete('cascade')->OnUpdate('cascade');
+            $table->timestamps(); // created_at and updated_at
         });
     }
 

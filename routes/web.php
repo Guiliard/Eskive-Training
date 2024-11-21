@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\ResourceController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,4 +20,6 @@ Route::group(['prefix' => 'test_controller'], function () {
     Route::get('/', [TestController::class, 'index'])->name('test_controller.index');
 
     Route::get('/product/{id?}', [TestController::class, 'show'])->name('test_controller.show');
+
+    Route::get('/resource', [ResourceController::class, 'index'])->name('test_controller.resource');
 });
