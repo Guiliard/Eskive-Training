@@ -6,33 +6,28 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function welcome()
+    public function index()
     {
-        return view('category_welcome');
+        return view('categories/index');
     }
 
     public function store(Request $request)
     {
-        return view('category_store');
+        return view('categories/store');
     }
 
-    public function show_one($id)
+    public function show($id)
     {
-        return view('category_show_one', ['id' => $id]);
-    }
-
-    public function show_all()
-    {
-        return view('category_show_all');
+        return view('categories/show', ['id' => $id]);
     }
 
     public function update(Request $request, $id)
     {
-        return view('category_update', ['id' => $id]);
+        return view('categories/update', ['id' => $id]);
     }
 
     public function destroy($id)
     {
-        return view('category_destroy', ['id' => $id]);
+        return view('categories/destroy', ['id' => $id]);
     }
 }

@@ -6,33 +6,29 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function welcome()
+    public function index()
     {
-        return view('product_welcome');
+        
+        return view('products/index');
     }
 
     public function store(Request $request)
     {
-        return view('product_store');
+        return view('products/store');
     }
 
-    public function show_one($id)
+    public function show($id)
     {
-        return view('product_show_one', ['id' => $id]);
-    }
-
-    public function show_all()
-    {
-        return view('product_show_all');
+        return view('products/show', ['id' => $id]);
     }
 
     public function update(Request $request, $id)
     {
-        return view('product_update', ['id' => $id]);
+        return view('products/update', ['id' => $id]);
     }
 
     public function destroy($id)
     {
-        return view('product_destroy', ['id' => $id]);
+        return view('products/destroy', ['id' => $id]);
     }
 }
