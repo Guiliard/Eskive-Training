@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-        return view('categories/index');
+        $categories = Category::all();
+        return view('categories/index', compact('categories'));
     }
 
     public function store(Request $request)
@@ -18,7 +20,8 @@ class CategoryController extends Controller
 
     public function show($id)
     {
-        return view('categories/show', ['id' => $id]);
+        $category_by_id = Category::findOrFail($id);
+        return view('categories/show', compact('category_by_id'));
     }
 
     public function update(Request $request, $id)

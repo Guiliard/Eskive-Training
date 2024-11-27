@@ -4,29 +4,69 @@
 
 @section('conteudo')
 
-    <h1>Bem-vindo ao Gerenciador de Produtos e Categorias</h1>
-
-    <h2>Gerenciamento de Produtos</h2>
-    <a href="{{ route('product.index') }}">Listar Produtos</a>
-    <br><br>
-    <a href="{{ route('product.show', ['id' => 0]) }}">Ver Um Produto Específico</a>
-    <br><br>
-    <a href="{{ route('product.store') }}">Cadastrar Novo Produto</a>
-    <br><br>
-    <a href="{{ route('product.update', ['id' => 0]) }}">Atualizar Produto Específico</a>
-    <br><br>
-    <a href="{{ route('product.destroy', ['id' => 0]) }}">Deletar Produto Específico</a>
-    <br><br>
+    <h1>Bem-vindo ao Gerenciador de Categorias e Produtos</h1>
 
     <h2>Gerenciamento de Categorias</h2>
-    <a href="{{ route('category.index') }}">Listar Categorias</a>
-    <br><br>
-    <a href="{{ route('category.show', ['id' => 0]) }}">Ver Uma Categoria Específica</a>
-    <br><br>
-    <a href="{{ route('category.store') }}">Cadastrar Nova Categoria</a>
-    <br><br>
-    <a href="{{ route('category.update', ['id' => 0]) }}">Atualizar Categoria Específica</a>
-    <br><br>
-    <a href="{{ route('category.destroy', ['id' => 0]) }}">Deletar Categoria Específica</a>
+
+    <form action="{{ route('category.index') }}" method="GET">
+        <button type="submit">Listar Categorias</button>
+    </form>
+    <br>
+
+    <form action="{{ route('category.store') }}" method="POST">
+        @csrf
+        <button type="submit">Cadastrar Nova Categoria</button>
+    </form>
+    <br>
+
+    <form action="{{ route('category.show', ['id' => 0]) }}" method="GET">
+        <button type="submit">Ver Uma Categoria Específica</button>
+    </form>
+    <br>
+
+    <form action="{{ route('category.update', ['id' => 0]) }}" method="POST">
+        @csrf
+        @method('PUT')
+        <button type="submit">Atualizar Categoria Específica</button>
+    </form>
+    <br>
+
+    <form action="{{ route('category.destroy', ['id' => 0]) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit">Deletar Categoria Específica</button>
+    </form>
+    <br>
+
+    <h2>Gerenciamento de Produtos</h2>
+
+    <form action="{{ route('product.index') }}" method="GET">
+        <button type="submit">Listar Produtos</button>
+    </form>
+    <br>
+
+    <form action="{{ route('product.store') }}" method="POST">
+        @csrf
+        <button type="submit">Cadastrar Novo Produto</button>
+    </form>
+    <br>
+
+    <form action="{{ route('product.show', ['id' => 0]) }}" method="GET">
+        <button type="submit">Ver Um Produto Específico</button>
+    </form>
+    <br>
+
+    <form action="{{ route('product.update', ['id' => 0]) }}" method="POST">
+        @csrf
+        @method('PUT')
+        <button type="submit">Atualizar Produto Específico</button>
+    </form>
+    <br>
+
+    <form action="{{ route('product.destroy', ['id' => 0]) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit">Deletar Produto Específico</button>
+    </form>
 
 @endsection

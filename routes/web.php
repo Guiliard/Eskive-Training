@@ -15,7 +15,7 @@ Route::group(['prefix' => 'product'], function () {
 
     Route::get('/{id}', [ProductController::class, 'show'])->name('product.show'); 
 
-    Route::put('/{id}', [ProductController::class, 'update'])->name('product.update'); 
+    Route::put('/{id}/edit', [ProductController::class, 'update'])->name('product.update'); 
 
     Route::delete('/{id}', [ProductController::class, 'destroy'])->name('product.destroy'); 
 });
@@ -27,7 +27,7 @@ Route::group(['prefix' => 'category'], function () {
 
     Route::get('/{id}', [CategoryController::class, 'show'])->name('category.show'); 
 
-    Route::put('/{id}', [CategoryController::class, 'update'])->name('category.update'); 
+    Route::put('/{id}/edit', [CategoryController::class, 'update'])->name('category.update'); 
     
     Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('category.destroy'); 
 });
