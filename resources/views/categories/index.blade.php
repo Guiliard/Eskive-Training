@@ -27,4 +27,14 @@
         </tbody>
     </table>
 
+@if (session('success'))
+    <p>{{ session('success') }}</p>
+@endif
+
+<br>
+
+<a href="{{ route('home') }}">
+    <button type="submit">Home</button>
+</a>
+
 @endsection

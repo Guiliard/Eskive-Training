@@ -25,12 +25,18 @@
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->description }}</td>
                     <td>{{ $product->price }}</td>
-                    <td>{{ $product->category_id }}</td>
+                    <td>{{ $product->category->name }}</td>
                     <td>{{ $product->created_at }}</td>
                     <td>{{ $product->updated_at }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+
+<br>
+
+<a href="{{ route('home') }}">
+    <button type="submit">Home</button>
+</a>
 
 @endsection

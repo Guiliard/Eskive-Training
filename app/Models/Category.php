@@ -13,6 +13,10 @@ class Category extends Model
 
     protected $table = 'categories';
 
+    protected $fillable = ['name'];
+
+    protected $dates = ['deleted_at'];
+
     public function products()
     {
         return $this->hasMany(Product::class); // One category has many products
