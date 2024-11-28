@@ -61,11 +61,9 @@
             const selectElement = document.getElementById(formId).querySelector('select');
             const selectedCategoryId = selectElement.value;
     
-            // Verifica se uma categoria foi selecionada
             if (selectedCategoryId) {
                 const form = document.getElementById(formId);
     
-                // Substitui o marcador de ID na URL de ação
                 const actionUrl = routeTemplate.replace('__ID__', selectedCategoryId);
                 form.action = actionUrl;
             }
@@ -126,11 +124,9 @@
             const selectElement = document.getElementById(formId).querySelector('select');
             const selectedProductId = selectElement.value;
     
-            // Verifica se um produto foi selecionado
             if (selectedProductId) {
                 const form = document.getElementById(formId);
     
-                // Substitui o marcador de ID na URL de ação
                 const actionUrl = routeTemplate.replace('__ID__', selectedProductId);
                 form.action = actionUrl;
             }
