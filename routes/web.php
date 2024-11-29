@@ -1,42 +1,45 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TestController;
-use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Models\Category;
+use App\Models\Product;
 
 Route::get('/', function () {
-    return view('welcome');
+    $categories = Category::all();
+    $products = Product::all();
+    return view('home/welcome', compact('categories', 'products'));
+})->name('home');
+
+Route::group(['prefix' => 'category'], function () {
+    Route::get('/', [CategoryController::class, 'index'])->name('category.index'); 
+
+    Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
+
+    Route::post('/', [CategoryController::class, 'store'])->name('category.store'); 
+
+    Route::get('/show/{id}', [CategoryController::class, 'show'])->name('category.show'); 
+
+    Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+
+    Route::put('/{id}', [CategoryController::class, 'update'])->name('category.update'); 
+    
+    Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('category.destroy'); 
 });
 
 Route::group(['prefix' => 'product'], function () {
-    Route::get('/', [ProductController::class, 'welcome'])->name('product.welcome');
+    Route::get('/', [ProductController::class, 'index'])->name('product.index');  
 
-    Route::post('/store', [ProductController::class, 'store'])->name('product.store');
+    Route::get('/create', [ProductController::class, 'create'])->name('product.create');
 
-    Route::get('/{id}', [ProductController::class, 'show_one'])->name('product.show_one');
+    Route::post('/', [ProductController::class, 'store'])->name('product.store'); 
 
-    Route::get('/all', [ProductController::class, 'show_all'])->name('product.show_all');
+    Route::get('show/{id}', [ProductController::class, 'show'])->name('product.show'); 
 
-    Route::put('/{id}', [ProductController::class, 'update'])->name('product.update');
+    Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
 
-    Route::delete('/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
+    Route::put('/{id}', [ProductController::class, 'update'])->name('product.update'); 
+
+    Route::delete('/{id}', [ProductController::class, 'destroy'])->name('product.destroy'); 
 });
-
-Route::group(['prefix' => 'category'], function () {
-    Route::get('/', [CategoryController::class, 'welcome'])->name('category.welcome');
-
-    Route::post('/store', [CategoryController::class, 'store'])->name('category.store');
-
-    Route::get('/{id}', [CategoryController::class, 'show_one'])->name('category.show_one');
-
-    Route::get('/all', [CategoryController::class, 'show_all'])->name('category.show_all');
-
-    Route::put('/{id}', [CategoryController::class, 'update'])->name('category.update');
-
-    Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
-});
-
-

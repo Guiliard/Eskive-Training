@@ -2,37 +2,77 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function welcome()
+    public function index()
     {
-        return view('category_welcome');
+        $categories = Category::all();
+        return view('categories/index', compact('categories'));
+    }
+
+    public function create() 
+    {
+        return view('categories/create');
     }
 
     public function store(Request $request)
     {
-        return view('category_store');
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $category = Category::create([
+            'name' => $validatedData['name'],
+        ]);
+
+        return redirect()->route('category.index')->with('success', 'Categoria ' . $category->name . ' cadastrada com sucesso!');
     }
 
-    public function show_one($id)
+
+    public function show($id)
     {
-        return view('category_show_one', ['id' => $id]);
+        $category = Category::findOrFail($id);
+        return view('categories/show', compact('category'));
     }
 
-    public function show_all()
+    public function edit($id)
     {
-        return view('category_show_all');
+        $category = Category::findOrFail($id);
+        return view('categories/edit', compact('category'));
     }
 
     public function update(Request $request, $id)
     {
-        return view('category_update', ['id' => $id]);
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $category = Category::findOrFail($id);
+
+        $category->update([
+            'name' => $validatedData['name'],
+        ]);
+
+        return redirect()->route('category.index')->with('success', 'Categoria ' . $category->name . ' atualizada com sucesso!');
     }
 
     public function destroy($id)
     {
-        return view('category_destroy', ['id' => $id]);
+        $category = Category::findOrFail($id);
+
+        $deletedProducts = $category->products->pluck('name')->toArray();
+
+        $category->products()->delete();
+
+        $category->delete();
+
+        $productList = implode(', ', $deletedProducts);
+        $message = 'Categoria ' . $category->name . ' deletada com sucesso! Produtos deletados: ' . $productList;
+
+        return redirect()->route('category.index')->with('success', $message);
     }
+
 }
