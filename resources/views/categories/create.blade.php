@@ -1,12 +1,12 @@
 @extends('../layout')
 
-@section('title', 'Store Category')
+@section('title', 'Create Categories')
 
 @section('conteudo')
 
 <h1>Cadastrar Nova Categoria</h1>
 
-<form action="{{ route('category.store') }}" method="POST">
+<form action="{{ route('categories.store') }}" method="POST">
     @csrf 
 
     <label for="name">Nome da Categoria:</label>
@@ -15,6 +15,12 @@
 
     <button type="submit">Cadastrar Categoria</button>
 </form>
+
+<br>
+
+<a href="{{ url()->previous() }}"> 
+    <button type="submit">Voltar</button> 
+</a>
 
 <br>
 

@@ -14,6 +14,14 @@
 <p><strong>Criado em:</strong> {{ $product->created_at }}</p>
 <p><strong>Atualizado em:</strong> {{ $product->updated_at }}</p>
 
+<br>
+
+<a href="{{ url()->previous() }}"> 
+    <button type="submit">Voltar</button> 
+</a>
+
+<br>
+
 <a href="{{ route('home') }}">
     <button type="submit">Home</button>
 </a>

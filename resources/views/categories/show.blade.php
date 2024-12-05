@@ -13,6 +13,12 @@
 
 <br>
 
+<a href="{{ url()->previous() }}"> 
+    <button type="submit">Voltar</button> 
+</a>
+
+<br>
+
 <a href="{{ route('home') }}">
     <button type="submit">Home</button>
 </a>

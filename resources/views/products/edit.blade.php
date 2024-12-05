@@ -6,7 +6,7 @@
 
 <h1>Editar Produto</h1>
 
-<form action="{{ route('product.update', $product->id) }}" method="POST">
+<form action="{{ route('products.update', $product->id) }}" method="POST">
     @csrf  
     @method('PUT') 
 
@@ -35,6 +35,12 @@
 
     <button type="submit">Atualizar Produto</button>
 </form>
+
+<br>
+
+<a href="{{ url()->previous() }}"> 
+    <button type="submit">Voltar</button> 
+</a>
 
 <br>
 
