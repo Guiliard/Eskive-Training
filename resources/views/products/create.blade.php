@@ -13,9 +13,13 @@
     <input type="text" id="name" name="name" required>
     <br><br>
 
-    <label for="description">Descrição do Produto:</label>
-    <textarea id="description" name="description"></textarea>
-    <br><br>
+    <table>
+        <tr>
+            <td><label for="description">Descrição do Produto:</label></td>
+            <td><textarea id="description" name="description"></textarea></td>
+        </tr>
+    </table>
+    <br>
 
     <label for="price">Preço do Produto:</label>
     <input type="number" id="price" name="price" step="0.01" min="0.01" required>

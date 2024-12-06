@@ -10,13 +10,17 @@
     @csrf  
     @method('PUT') 
 
-    <label for="name">Nome:</label>
+    <label for="name">Nome do Produto:</label>
     <input type="text" id="name" name="name" value="{{ $product->name }}" required>
     <br><br>
 
-    <label for="description">Descrição:</label>
-    <textarea id="description" name="description" required>{{ $product->description }}</textarea>
-    <br><br>
+    <table>
+        <tr>
+            <td><label for="description">Descrição do Produto:</label></td>
+            <td><textarea id="description" name="description" required>{{ $product->description }}</textarea></td>
+        </tr>
+    </table>    
+    <br>
 
     <label for="price">Preço:</label>
     <input type="number" id="price" name="price" step="0.01" value="{{ $product->price }}" required>
