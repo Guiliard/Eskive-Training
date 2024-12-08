@@ -1,12 +1,12 @@
 @extends('../layout')
 
-@section('title', 'Edit Category')
+@section('title', 'Edit Categories')
 
 @section('conteudo')
 
 <h1>Editar Categoria</h1>
 
-<form action="{{ route('category.update', $category->id) }}" method="POST">
+<form action="{{ route('categories.update', $category->id) }}" method="POST">
     @csrf
     @method('PUT') 
 
@@ -16,6 +16,12 @@
 
     <button type="submit">Atualizar Categoria</button>
 </form>
+
+<br>
+
+<a href="{{ url()->previous() }}"> 
+    <button type="submit">Voltar</button> 
+</a>
 
 <br>
 

@@ -15,43 +15,59 @@ Este projeto é uma aplicação web desenvolvida com Laravel para gerenciar cate
 ## Funcionalidades
 
 ### Categorias
-- Listar categorias
-- Cadastrar nova categoria
-- Visualizar detalhes de uma categoria
-- Editar categoria existente
-- Excluir categoria (e seus produtos relacionados)
+- **Listar categorias**: Exibe todas as categorias cadastradas.
+- **Cadastrar nova categoria**: Permite criar uma nova categoria.
+- **Visualizar detalhes de uma categoria**: Exibe informações detalhadas de uma categoria.
+- **Editar categoria existente**: Permite atualizar os dados de uma categoria.
+- **Excluir categoria**: Remove a categoria e todos os produtos associados.
 
 ### Produtos
-- Listar produtos
-- Cadastrar novo produto
-- Visualizar detalhes de um produto
-- Editar produto existente
-- Excluir produto
+- **Listar produtos**: Exibe todos os produtos cadastrados.
+- **Cadastrar novo produto**: Permite criar um novo produto.
+- **Visualizar detalhes de um produto**: Exibe informações detalhadas de um produto.
+- **Editar produto existente**: Permite atualizar os dados de um produto.
+- **Excluir produto**: Remove o produto do sistema.
 
 ## Estrutura do Projeto
 
 ### Controllers
-- **CategoryController**: Gerencia operações CRUD para categorias.
-- **ProductController**: Gerencia operações CRUD para produtos.
+- **CategoryController**: Gerencia as operações CRUD para categorias.
+- **ProductController**: Gerencia as operações CRUD para produtos.
 
 ### Models
-- **Category**: Representa a entidade `categories` com relacionamento `hasMany` para `products`.
-- **Product**: Representa a entidade `products` com relacionamento `belongsTo` para `categories`.
+- **Category**: Representa a entidade `categories`, com relacionamento `hasMany` para `products`.
+- **Product**: Representa a entidade `products`, com relacionamento `belongsTo` para `categories`.
 
 ### Migrations
-- **categories**: Cria a tabela de categorias com suporte a exclusão lógica.
-- **products**: Cria a tabela de produtos com chave estrangeira para categorias.
+- **categories**: Define a estrutura da tabela de categorias, com suporte a exclusão lógica.
+- **products**: Define a estrutura da tabela de produtos, com uma chave estrangeira para associar produtos às categorias.
 
 ### Views
-- **Layout**: Template base para as páginas.
-- **Home**: Página inicial com links para gestão de categorias e produtos.
-- **Categories**: Views específicas para listar, cadastrar, editar e visualizar categorias.
-- **Products**: Views específicas para listar, cadastrar, editar e visualizar produtos.
+- **Layout**: Contém o template base usado em todas as páginas.
+- **Home**: Página inicial com o **menu principal**, que redireciona para:
+  - **Categorias**: Página de listagem (index) das categorias.
+  - **Produtos**: Página de listagem (index) dos produtos.
+- **Categories**: Inclui as views específicas para listar, cadastrar, editar e visualizar categorias.
+- **Products**: Inclui as views específicas para listar, cadastrar, editar e visualizar produtos.
 
 ### Rotas
-- **Home**: Exibe a página inicial (`/`).
+- **Home**: Exibe a página inicial definido como Menu (`/`).
 - **Categorias**: Prefixo `/category` com rotas para operações CRUD.
 - **Produtos**: Prefixo `/product` com rotas para operações CRUD.
+
+## Navegação
+
+Na página inicial (Home), o **menu principal** simplifica a navegação:
+- **Categorias**: Link para a página de listagem de categorias.
+- **Produtos**: Link para a página de listagem de produtos.
+
+A partir das páginas de listagem (index), o usuário pode realizar todas as ações disponíveis:
+- Criar novos registros.
+- Visualizar detalhes de registros.
+- Editar registros existentes.
+- Excluir registros.
+
+Essa estrutura centraliza as operações e facilita a usabilidade da aplicação.
 
 ## Como Executar
 

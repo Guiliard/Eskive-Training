@@ -1,21 +1,25 @@
 @extends('../layout')
 
-@section('title', 'Cadastrar Produto')
+@section('title', 'Create Products')
 
 @section('conteudo')
 
 <h1>Cadastrar Novo Produto</h1>
 
-<form action="{{ route('product.store') }}" method="POST">
+<form action="{{ route('products.store') }}" method="POST">
     @csrf 
 
     <label for="name">Nome do Produto:</label>
     <input type="text" id="name" name="name" required>
     <br><br>
 
-    <label for="description">Descrição do Produto:</label>
-    <textarea id="description" name="description"></textarea>
-    <br><br>
+    <table>
+        <tr>
+            <td><label for="description">Descrição do Produto:</label></td>
+            <td><textarea id="description" name="description"></textarea></td>
+        </tr>
+    </table>
+    <br>
 
     <label for="price">Preço do Produto:</label>
     <input type="number" id="price" name="price" step="0.01" min="0.01" required>
@@ -32,6 +36,12 @@
 
     <button type="submit">Cadastrar Produto</button>
 </form>
+
+<br>
+
+<a href="{{ url()->previous() }}"> 
+    <button type="submit">Voltar</button> 
+</a>
 
 <br>
 

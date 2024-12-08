@@ -24,10 +24,38 @@ class ProductController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:1000', 
-            'price' => 'required|numeric|min:0.01', 
-            'category_id' => 'required|exists:categories,id', 
+            'description' => 'nullable|string|max:1000',
+            'price' => 'required|numeric|min:0.01',
+            'category_id' => 'required|exists:categories,id',
         ]);
+
+        $existingProduct = Product::where('name', $validatedData['name'])
+            ->where('category_id', $validatedData['category_id'])
+            ->first();
+
+        if ($existingProduct) {
+            $createdAt = $existingProduct->created_at->format('d/m/Y H:i');
+            $errorMessage = "O produto '{$existingProduct->name}' já existe na categoria selecionada! Criado em: {$createdAt}.";
+
+            return view('error', ['error' => $errorMessage]);
+        }
+
+        $deletedProduct = Product::withTrashed()
+            ->where('name', $validatedData['name'])
+            ->where('category_id', $validatedData['category_id'])
+            ->first();
+
+        if ($deletedProduct) {
+            $deletedProduct->restore();
+            $deletedProduct->update([
+                'description' => $validatedData['description'] ?? $deletedProduct->description,
+                'price' => $validatedData['price'],
+            ]);
+            $deletedProduct->touch();
+
+            return redirect()->route('products.index')
+                ->with('success', "Produto '{$deletedProduct->name}' restaurado com sucesso!");
+        }
 
         $product = Product::create([
             'name' => $validatedData['name'],
@@ -36,8 +64,10 @@ class ProductController extends Controller
             'category_id' => $validatedData['category_id'],
         ]);
 
-        return redirect()->route('product.index')->with('success', 'Produto ' . $product->name . ' cadastrado com sucesso!');
+        return redirect()->route('products.index')
+            ->with('success', "Produto '{$product->name}' cadastrado com sucesso!");
     }
+
 
     public function show($id)
     {
@@ -63,6 +93,27 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($id);
 
+        $existingProduct = Product::where('name', $validatedData['name'])
+        ->where('category_id', $validatedData['category_id'])
+        ->where('id', '!=', $id)
+        ->first();
+
+        if ($existingProduct) {
+            $errorMessage = "Outro produto com o nome '{$validatedData['name']}' já existe na categoria selecionada.";
+            return view('error', ['error' => $errorMessage]);
+        }
+
+        $deletedProduct = Product::withTrashed()
+        ->where('name', $validatedData['name'])
+        ->where('category_id', $validatedData['category_id'])
+        ->where('id', '!=', $id)
+        ->first();
+
+        if ($deletedProduct) {
+            $errorMessage = "Um produto deletado com o nome '{$validatedData['name']}' já existe na categoria selecionada. Restaure-o primeiro ou escolha outro nome.";
+            return view('error', ['error' => $errorMessage]);
+        }
+
         $product->update([
             'name' => $validatedData['name'],
             'description' => $validatedData['description'] ?? null,
@@ -70,7 +121,7 @@ class ProductController extends Controller
             'category_id' => $validatedData['category_id'],
         ]);
 
-        return redirect()->route('product.index')->with('success', 'Produto ' . $product->name . ' atualizado com sucesso!');
+        return redirect()->route('products.index')->with('success', 'Produto ' . $product->name . ' atualizado com sucesso!');
     }
 
     public function destroy($id)
@@ -79,7 +130,7 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return redirect()->route('product.index')->with('success', 'Produto ' . $product->name . ' deletado com sucesso!');
+        return redirect()->route('products.index')->with('success', 'Produto ' . $product->name . ' deletado com sucesso!');
     }
 }
 

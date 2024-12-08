@@ -24,13 +24,36 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
+        $existingCategory = Category::where('name', $validatedData['name'])->first();
+
+        if ($existingCategory) {
+            $createdAt = $existingCategory->created_at->format('d/m/Y H:i');
+            $errorMessage = "A categoria '{$existingCategory->name}' já existe! Criada em: {$createdAt}.";
+
+            return view('error', ['error' => $errorMessage]);
+        }
+
+        $deletedCategory = Category::withTrashed()
+            ->where('name', $validatedData['name'])
+            ->first();
+
+        if ($deletedCategory) {
+            $deletedCategory->restore();
+            $deletedCategory->touch();
+
+            $deletedCategory->products()->restore();
+
+            return redirect()->route('categories.index')
+                ->with('success', "Categoria '{$deletedCategory->name}' e seus produtos associados foram recuperados com sucesso!");
+        }
+
         $category = Category::create([
             'name' => $validatedData['name'],
         ]);
 
-        return redirect()->route('category.index')->with('success', 'Categoria ' . $category->name . ' cadastrada com sucesso!');
+        return redirect()->route('categories.index')
+            ->with('success', "Categoria '{$category->name}' cadastrada com sucesso!");
     }
-
 
     public function show($id)
     {
@@ -52,11 +75,30 @@ class CategoryController extends Controller
 
         $category = Category::findOrFail($id);
 
+        $existingCategory = Category::where('name', $validatedData['name'])
+            ->where('id', '!=', $id) 
+            ->first();
+
+        if ($existingCategory) {
+            $errorMessage = "Outra categoria com o nome '{$validatedData['name']}' já existe.";
+            return view('error', ['error' => $errorMessage]);
+        }
+
+        $deletedCategory = Category::withTrashed()
+            ->where('name', $validatedData['name'])
+            ->where('id', '!=', $id) 
+            ->first();
+
+        if ($deletedCategory) {
+            $errorMessage = "Uma categoria deletada com o nome '{$validatedData['name']}' já existe. Restaure-a primeiro ou escolha outro nome.";
+            return view('error', ['error' => $errorMessage]);
+        }
+
         $category->update([
             'name' => $validatedData['name'],
         ]);
 
-        return redirect()->route('category.index')->with('success', 'Categoria ' . $category->name . ' atualizada com sucesso!');
+        return redirect()->route('categories.index')->with('success', 'Categoria ' . $category->name . ' atualizada com sucesso!');
     }
 
     public function destroy($id)
@@ -72,7 +114,6 @@ class CategoryController extends Controller
         $productList = implode(', ', $deletedProducts);
         $message = 'Categoria ' . $category->name . ' deletada com sucesso! Produtos deletados: ' . $productList;
 
-        return redirect()->route('category.index')->with('success', $message);
+        return redirect()->route('categories.index')->with('success', $message);
     }
-
 }
