@@ -82,19 +82,24 @@ Essa estrutura centraliza as operações e facilita a usabilidade da aplicação
    composer install
    ```
 
-3. Configure o arquivo `.env` com as credenciais do banco de dados.
+3. Copie o arquivo `.env.exemple` e configure o arquivo `.env` com as credenciais do banco de dados.
 
 4. Execute as migrations:
    ```bash
    php artisan migrate
    ```
 
-5. Inicie o servidor:
+5. Execute as seeders:
+   ```bash
+   php artisan db:seed
+   ```
+
+6. Inicie o servidor:
    ```bash
    php artisan serve
    ```
 
-6. Acesse no navegador:
+7. Acesse no navegador:
    ```bash
    http://localhost:8000
    ```
